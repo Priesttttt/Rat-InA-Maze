@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 18px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 6px;
+    background: #2d89ef;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #1b5fbf;
+}
+
+.maze {
+    display: grid;
+    grid-template-columns: repeat(10, 45px);
+    grid-template-rows: repeat(10, 45px);
+    gap: 2px;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.cell {
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.start {
+    background: #2ecc71;
+}
+
+.end {
+    background: #e74c3c;
+}
+
+.wall {
+    background: #2c3e50;
+}
+
+.visited {
+    background: #4aa3ff;
+}
+
+.backtrack {
+    background: #f39c12;
+}
+
+.path {
+    background: #27ae60;
+}
+
+#status {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #444;
+}
