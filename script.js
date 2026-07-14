@@ -93,3 +93,80 @@ clearBtn.addEventListener("click", clearPaths);
 resetBtn.addEventListener("click", resetMaze);
 
 createGrid();
+
+const directions = [
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [0, -1]
+];
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function solveMaze(row, col, visited) {
+    if (
+        row < 0 ||
+        col < 0 ||
+        row >= SIZE ||
+        col >= SIZE ||
+        grid[row][col] === 1 ||
+        visited[row][col]
+    ) {
+        return false;
+    }
+
+    visited[row][col] = true;
+
+    if (!(row === 0 && col === 0) && !(row === SIZE - 1 && col === SIZE - 1)) {
+        cells[row][col].classList.add("visited");
+        await delay(80);
+    }
+
+    if (row === SIZE - 1 && col === SIZE - 1) {
+        return true;
+    }
+
+    for (const [dr, dc] of directions) {
+        if (await solveMaze(row + dr, col + dc, visited)) {
+
+            if (!(row === 0 && col === 0)) {
+                cells[row][col].classList.remove("visited");
+                cells[row][col].classList.add("path");
+                await delay(80);
+            }
+
+            return true;
+        }
+    }
+
+    if (!(row === 0 && col === 0)) {
+        cells[row][col].classList.remove("visited");
+        cells[row][col].classList.add("backtrack");
+        await delay(80);
+    }
+
+    return false;
+}
+
+solveBtn.addEventListener("click", async () => {
+    if (solving) return;
+
+    solving = true;
+    clearPaths();
+
+    const visited = Array.from({ length: SIZE }, () =>
+        Array(SIZE).fill(false)
+    );
+
+    statusText.textContent = "Solving...";
+
+    const found = await solveMaze(0, 0, visited);
+
+    if (found) {
+        statusText.textContent = "Path Found!";
+    } else {
+        statusText.textContent = "No Path Exists!";
+    }
+
+    solving = false;
+});
